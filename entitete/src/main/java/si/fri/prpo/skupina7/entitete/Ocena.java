@@ -1,4 +1,7 @@
+package si.fri.prpo.skupina7.entitete;
+
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity(name = "ocena")
 @NamedQueries(value =
@@ -11,18 +14,18 @@ public class Ocena {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "uporabnik_id")
+    @JoinColumn(name = "uporabnik", referencedColumnName = "id")
     private Uporabnik uporabnik;
 
     @ManyToOne
-    @JoinColumn(name = "film_id")
+    @JoinColumn(name = "film", referencedColumnName = "id")
     private Film film;
 
     private Integer ocena;
 
     private String komentar;
 
-    private String casOddaje;
+    private Instant casOddaje;
 
     public Integer getId() {
         return id;
@@ -64,11 +67,11 @@ public class Ocena {
         this.komentar = komentar;
     }
 
-    public String getCasOddaje() {
+    public Instant getCasOddaje() {
         return casOddaje;
     }
 
-    public void setCasOddaje(String casOddaje) {
+    public void setCasOddaje(Instant casOddaje) {
         this.casOddaje = casOddaje;
     }
 

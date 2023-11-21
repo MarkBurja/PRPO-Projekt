@@ -1,3 +1,5 @@
+package si.fri.prpo.skupina7.entitete;
+
 import javax.persistence.*;
 
 @Entity(name = "zanr")
@@ -10,6 +12,7 @@ public class Zanr {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String ime;
 
     public Integer getId() {

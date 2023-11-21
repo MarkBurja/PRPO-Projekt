@@ -3,10 +3,10 @@
     <persistence-unit name="priporocila-jpa" transaction-type="JTA">
         <jta-data-source>jdbc/PriporocilaDS</jta-data-source>
 
-        <class>Film</class>
-        <class>Zanr</class>
-        <class>Uporabnik</class>
-        <class>Ocena</class>
+        <class>si.fri.prpo.skupina7.entitete.Film</class>
+        <class>si.fri.prpo.skupina7.entitete.Zanr</class>
+        <class>si.fri.prpo.skupina7.entitete.Uporabnik</class>
+        <class>si.fri.prpo.skupina7.entitete.Ocena</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

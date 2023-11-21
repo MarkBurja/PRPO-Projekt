@@ -1,3 +1,5 @@
+package si.fri.prpo.skupina7.entitete;
+
 import javax.persistence.*;
 import java.util.List;
 
