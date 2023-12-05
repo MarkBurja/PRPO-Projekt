@@ -52,10 +52,12 @@ public class UporabnikiZrno {
     }
 
     @Transactional
-    public void posodobiUporabnika(int uporabnikId, Uporabnik noviUporabnik) {
+    public Uporabnik posodobiUporabnika(int uporabnikId, Uporabnik noviUporabnik) {
         Uporabnik uporabnik = em.find(Uporabnik.class, uporabnikId);
         noviUporabnik.setId(uporabnik.getId());
         em.merge(noviUporabnik);
+
+        return noviUporabnik;
     }
 
     @Transactional

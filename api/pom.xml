@@ -30,6 +30,10 @@
             <groupId>si.fri.prpo.skupina7</groupId>
             <artifactId>storitve</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

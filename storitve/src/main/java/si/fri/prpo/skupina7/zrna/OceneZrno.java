@@ -52,10 +52,12 @@ public class OceneZrno {
     }
 
     @Transactional
-    public void posodobiOceno(int ocenaId, Ocena noviOcena) {
+    public Ocena posodobiOceno(int ocenaId, Ocena novaOcena) {
         Ocena ocena = em.find(Ocena.class, ocenaId);
-        noviOcena.setId(ocena.getId());
-        em.merge(noviOcena);
+        novaOcena.setId(ocena.getId());
+        em.merge(novaOcena);
+
+        return novaOcena;
     }
 
     @Transactional

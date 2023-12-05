@@ -68,9 +68,47 @@ public class UpravljanjeUporabnikovZrno {
         return uporabnikiZrno.dodajUporabnika(uporabnik);
     }
 
+    public Uporabnik posodobiUporabnika(int id, UporabnikDto uporabnikDto) {
+        Uporabnik uporabnik = uporabnikiZrno.pridobiUporabnika(id);
+        if(uporabnik == null) {
+            log.info("Uporabnik ne obstaja.");
+            return null;
+        }
+
+        String uporabniskoIme = uporabnikDto.getUporabniskoIme();
+        if(uporabniskoIme.length() < 3 || uporabniskoIme.length() > 30) {
+            log.info("Neveljavno uporabniško ime.");
+            return null;
+        }
+
+        String geslo = uporabnikDto.getGeslo();
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$";
+        Pattern p = Pattern.compile(regex);
+
+        if(geslo.length() < 8 || geslo.length() > 30 || !(p.matcher(geslo).matches())) {
+            log.info("Neveljavno geslo.");
+            return null;
+        }
+
+        Character spol = uporabnikDto.getSpol();
+        if(spol != 'm' && spol != 'ž' && spol != '-') {
+            log.info("Neveljaven spol.");
+            return null;
+        }
+
+        uporabnik.setUporabniskoIme(uporabniskoIme);
+        uporabnik.setEmail(uporabnikDto.getEmail());
+        uporabnik.setGeslo(geslo);
+        uporabnik.setIme(uporabnikDto.getIme());
+        uporabnik.setPriimek(uporabnikDto.getPriimek());
+        uporabnik.setStarost(uporabnikDto.getStarost());
+        uporabnik.setSpol(uporabnikDto.getSpol());
+
+        return uporabnikiZrno.posodobiUporabnika(id, uporabnik);
+    }
+
     @Transactional
-    public void spremeniGeslo(UporabnikDto uporabnikDto) {
-        Integer id = uporabnikDto.getId();
+    public Uporabnik spremeniGeslo(int id, UporabnikDto uporabnikDto) {
         Uporabnik uporabnik = uporabnikiZrno.pridobiUporabnika(id);
         if(uporabnik == null) {
             log.info("Uporabnik ne obstaja.");
@@ -87,6 +125,6 @@ public class UpravljanjeUporabnikovZrno {
         }
 
         uporabnik.setGeslo(geslo);
-        uporabnikiZrno.posodobiUporabnika(id, uporabnik);
+        return uporabnikiZrno.posodobiUporabnika(id, uporabnik);
     }
 }

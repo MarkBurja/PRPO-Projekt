@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina7.zrna;
 
+import si.fri.prpo.skupina7.anotacije.BeleziKlice;
 import si.fri.prpo.skupina7.entitete.Film;
 
 import javax.annotation.PostConstruct;
@@ -32,12 +33,14 @@ public class FilmiZrno {
         log.info("Deinicializacija zrna " + FilmiZrno.class.getSimpleName() + " (" + id + ")");
     }
 
+    @BeleziKlice
     public List<Film> pridobiFilme() {
         TypedQuery<Film> query = em.createNamedQuery("Film.getAll", Film.class);
         List<Film> results = query.getResultList();
         return results;
     }
 
+    @BeleziKlice
     public Film pridobiFilm(int filmId) {
         Film film = em.find(Film.class, filmId);
         return film;
@@ -52,10 +55,12 @@ public class FilmiZrno {
     }
 
     @Transactional
-    public void posodobiFilm(int filmId, Film noviFilm) {
+    public Film posodobiFilm(int filmId, Film noviFilm) {
         Film film = em.find(Film.class, filmId);
         noviFilm.setId(film.getId());
         em.merge(noviFilm);
+
+        return noviFilm;
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package si.fri.prpo.skupina7;
+package si.fri.prpo.skupina7.servleti;
 
 import si.fri.prpo.skupina7.dtos.OcenaDto;
 import si.fri.prpo.skupina7.entitete.Film;

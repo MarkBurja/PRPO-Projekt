@@ -38,4 +38,17 @@ public class UpravljanjeZanrovZrno {
 
         return zanriZrno.dodajZanr(zanr);
     }
+
+    public Zanr posodobiZanr(int id, ZanrDto zanrDto) {
+        Zanr zanr = zanriZrno.pridobiZanr(id);
+
+        if(zanr == null) {
+            log.info("Zanr ne obstaja.");
+            return null;
+        }
+
+        zanr.setIme(zanrDto.getIme());
+
+        return zanriZrno.posodobiZanr(id, zanr);
+    }
 }

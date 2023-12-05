@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-@RequestScoped
+@ApplicationScoped
 public class UpravljanjeOcenZrno {
     private UUID id;
 
@@ -70,5 +70,41 @@ public class UpravljanjeOcenZrno {
         ocena.setCasOddaje(Instant.now());
 
         return oceneZrno.dodajOceno(ocena);
+    }
+
+    @Transactional
+    public Ocena posodobiOceno(int id, OcenaDto ocenaDto) {
+
+        Ocena ocena = oceneZrno.pridobiOceno(id);
+        if(ocena == null) {
+            log.info("Ocena ne obstaja");
+            return null;
+        }
+
+        Film film = filmiZrno.pridobiFilm(ocenaDto.getFilmId());
+        if(film == null) {
+            log.info("Film ne obstaja.");
+            return null;
+        }
+
+        Uporabnik uporabnik = uporabnikiZrno.pridobiUporabnika(ocenaDto.getUporabnikId());
+        if(uporabnik == null) {
+            log.info("Uporabnik ne obstaja.");
+            return null;
+        }
+
+        Integer ocena1 = ocenaDto.getOcena();
+        if(ocena1 < 0 || ocena1 > 10) {
+            log.info("Ocena je neveljavna.");
+            return null;
+        }
+
+        ocena.setFilm(film);
+        ocena.setUporabnik(uporabnik);
+        ocena.setOcena(ocena1);
+        ocena.setKomentar(ocenaDto.getKomentar());
+        ocena.setCasOddaje(ocenaDto.getCasOddaje());
+
+        return oceneZrno.posodobiOceno(id, ocena);
     }
 }

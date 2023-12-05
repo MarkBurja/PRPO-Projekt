@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina7.zrna;
 
+import si.fri.prpo.skupina7.anotacije.BeleziKlice;
 import si.fri.prpo.skupina7.entitete.Zanr;
 
 import javax.annotation.PostConstruct;
@@ -32,12 +33,14 @@ public class ZanriZrno {
         log.info("Deinicializacija zrna " + ZanriZrno.class.getSimpleName() + " (" + id + ")");
     }
 
+    @BeleziKlice
     public List<Zanr> pridobiZanre() {
         TypedQuery<Zanr> query = em.createNamedQuery("Zanr.getAll", Zanr.class);
         List<Zanr> results = query.getResultList();
         return results;
     }
 
+    @BeleziKlice
     public Zanr pridobiZanr(int zanrId) {
         Zanr zanr = em.find(Zanr.class, zanrId);
         return zanr;
@@ -52,10 +55,12 @@ public class ZanriZrno {
     }
 
     @Transactional
-    public void posodobiZanr(int zanrId, Zanr noviZanr) {
+    public Zanr posodobiZanr(int zanrId, Zanr noviZanr) {
         Zanr zanr = em.find(Zanr.class, zanrId);
         noviZanr.setId(zanr.getId());
         em.merge(noviZanr);
+
+        return noviZanr;
     }
 
     @Transactional

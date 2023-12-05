@@ -2,6 +2,7 @@ package si.fri.prpo.skupina7.zrna;
 
 import si.fri.prpo.skupina7.dtos.FilmDto;
 import si.fri.prpo.skupina7.entitete.Film;
+import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.entitete.Zanr;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,13 @@ public class UpravljanjeFilmovZrno {
     @Transactional
     public Film dodajFilm(FilmDto filmDto) {
 
+        String naslov = filmDto.getNaslov();
+
+        if(naslov == null || naslov.isEmpty()) {
+            log.info("Neveljaven naslov.");
+            return null;
+        }
+
         Zanr zanr = zanriZrno.pridobiZanr(filmDto.getZanrId());
 
         if(zanr == null) {
@@ -47,13 +55,45 @@ public class UpravljanjeFilmovZrno {
         }
 
         Film film = new Film();
-        film.setNaslov(filmDto.getNaslov());
+        film.setNaslov(naslov);
         film.setOpis(filmDto.getOpis());
         film.setLeto(filmDto.getLeto());
         film.setRating(filmDto.getRating());
         film.setZanr(zanr);
 
         return filmiZrno.dodajFilm(film);
+    }
+
+    @Transactional
+    public Film posodobiFilm(int id, FilmDto filmDto) {
+        Film film = filmiZrno.pridobiFilm(id);
+
+        if(film == null) {
+            log.info("Film ne obstaja.");
+            return null;
+        }
+
+        String naslov = filmDto.getNaslov();
+
+        if(naslov == null || naslov.isEmpty()) {
+            log.info("Neveljaven naslov.");
+            return null;
+        }
+
+        Zanr zanr = zanriZrno.pridobiZanr(filmDto.getZanrId());
+
+        if(zanr == null) {
+            log.info("Zanr ne obstaja.");
+            return null;
+        }
+
+        film.setNaslov(naslov);
+        film.setOpis(filmDto.getOpis());
+        film.setLeto(filmDto.getLeto());
+        film.setRating(filmDto.getRating());
+        film.setZanr(zanr);
+
+        return filmiZrno.posodobiFilm(id, film);
     }
 
 }
