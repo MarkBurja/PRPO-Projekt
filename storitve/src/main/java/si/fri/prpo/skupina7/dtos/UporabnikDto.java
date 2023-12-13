@@ -8,7 +8,7 @@ public class UporabnikDto {
     private String ime;
     private String priimek;
     private Integer starost;
-    private Character spol;
+    private String spol;
 
     public Integer getId() {
         return id;
@@ -66,11 +66,11 @@ public class UporabnikDto {
         this.starost = starost;
     }
 
-    public Character getSpol() {
+    public String getSpol() {
         return spol;
     }
 
-    public void setSpol(Character spol) {
+    public void setSpol(String spol) {
         this.spol = spol;
     }
 }

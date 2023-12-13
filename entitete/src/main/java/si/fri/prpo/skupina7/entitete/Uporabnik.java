@@ -28,7 +28,7 @@ public class Uporabnik {
 
     private Integer starost;
 
-    private Character spol;
+    private String spol;
 
     @JsonbTransient
     @OneToMany(mappedBy = "uporabnik", cascade = CascadeType.ALL)
@@ -90,11 +90,11 @@ public class Uporabnik {
         this.starost = starost;
     }
 
-    public Character getSpol() {
+    public String getSpol() {
         return spol;
     }
 
-    public void setSpol(Character spol) {
+    public void setSpol(String spol) {
         this.spol = spol;
     }
 

@@ -52,8 +52,8 @@ public class UpravljanjeUporabnikovZrno {
             return null;
         }
 
-        Character spol = uporabnikDto.getSpol();
-        if(spol != 'M' && spol != 'F' && spol != '-') {
+        String spol = uporabnikDto.getSpol();
+        if(!spol.equals("M") && !spol.equals("F") && !spol.equals("-")) {
             log.info("Neveljaven spol.");
             return null;
         }
@@ -92,8 +92,8 @@ public class UpravljanjeUporabnikovZrno {
             return null;
         }
 
-        Character spol = uporabnikDto.getSpol();
-        if(spol != 'M' && spol != 'F' && spol != '-') {
+        String spol = uporabnikDto.getSpol();
+        if(!spol.equals("M") && !spol.equals("F") && !spol.equals("-")) {
             log.info("Neveljaven spol.");
             return null;
         }
