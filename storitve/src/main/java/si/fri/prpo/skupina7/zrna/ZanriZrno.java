@@ -1,6 +1,9 @@
 package si.fri.prpo.skupina7.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina7.anotacije.BeleziKlice;
+import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.entitete.Zanr;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +41,14 @@ public class ZanriZrno {
         TypedQuery<Zanr> query = em.createNamedQuery("Zanr.getAll", Zanr.class);
         List<Zanr> results = query.getResultList();
         return results;
+    }
+
+    public List<Zanr> pridobiZanre(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Zanr.class, query);
+    }
+
+    public Long pridobiZanreCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Zanr.class, query);
     }
 
     @BeleziKlice

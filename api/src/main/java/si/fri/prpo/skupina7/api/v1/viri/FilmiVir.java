@@ -1,15 +1,19 @@
 package si.fri.prpo.skupina7.api.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina7.dtos.FilmDto;
 import si.fri.prpo.skupina7.entitete.Film;
+import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.zrna.FilmiZrno;
 import si.fri.prpo.skupina7.zrna.UpravljanjeFilmovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("filmi")
@@ -17,6 +21,9 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class FilmiVir {
+
+    @Context
+    protected UriInfo uriInfo;
 
     @Inject
     private FilmiZrno filmiZrno;
@@ -26,9 +33,11 @@ public class FilmiVir {
 
     @GET
     public Response pridobiFilme() {
-        List<Film> filmi = filmiZrno.pridobiFilme();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long filmiCount = filmiZrno.pridobiFilmeCount(query);
+        List<Film> filmi = filmiZrno.pridobiFilme(query);
 
-        return Response.status(Response.Status.OK).entity(filmi).build();
+        return Response.status(Response.Status.OK).entity(filmi).header("X-Total-Count", filmiCount).build();
     }
 
     @GET
