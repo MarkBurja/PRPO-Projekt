@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina7.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class Film {
     @JoinColumn(name = "zanr", referencedColumnName = "id")
     private Zanr zanr;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Ocena> ocene;
 

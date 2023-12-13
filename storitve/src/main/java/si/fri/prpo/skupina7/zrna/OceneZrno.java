@@ -1,5 +1,7 @@
 package si.fri.prpo.skupina7.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina7.entitete.Ocena;
 
 import javax.annotation.PostConstruct;
@@ -36,6 +38,14 @@ public class OceneZrno {
         TypedQuery<Ocena> query = em.createNamedQuery("Ocena.getAll", Ocena.class);
         List<Ocena> results = query.getResultList();
         return results;
+    }
+
+    public List<Ocena> pridobiOcene(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Ocena.class, query);
+    }
+
+    public Long pridobiOceneCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Ocena.class, query);
     }
 
     public Ocena pridobiOceno(int ocenaId) {
