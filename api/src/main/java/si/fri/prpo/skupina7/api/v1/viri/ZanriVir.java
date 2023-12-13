@@ -1,8 +1,6 @@
 package si.fri.prpo.skupina7.api.v1.viri;
 
-import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina7.dtos.ZanrDto;
-import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.entitete.Zanr;
 import si.fri.prpo.skupina7.zrna.ZanriZrno;
 import si.fri.prpo.skupina7.zrna.UpravljanjeZanrovZrno;
@@ -10,10 +8,8 @@ import si.fri.prpo.skupina7.zrna.UpravljanjeZanrovZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("zanri")
@@ -21,9 +17,6 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ZanriVir {
-
-    @Context
-    protected UriInfo uriInfo;
 
     @Inject
     private ZanriZrno zanriZrno;
@@ -33,11 +26,9 @@ public class ZanriVir {
 
     @GET
     public Response pridobiZanre() {
-        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        Long zanriCount = zanriZrno.pridobiZanreCount(query);
-        List<Zanr> zanri = zanriZrno.pridobiZanre(query);
+        List<Zanr> zanri = zanriZrno.pridobiZanre();
 
-        return Response.status(Response.Status.OK).entity(zanri).header("X-Total-Count", zanriCount).build();
+        return Response.status(Response.Status.OK).entity(zanri).build();
     }
 
     @GET

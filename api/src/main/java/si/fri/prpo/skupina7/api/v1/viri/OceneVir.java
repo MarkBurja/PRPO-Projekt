@@ -1,19 +1,15 @@
 package si.fri.prpo.skupina7.api.v1.viri;
 
-import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina7.dtos.OcenaDto;
 import si.fri.prpo.skupina7.entitete.Ocena;
-import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.zrna.OceneZrno;
 import si.fri.prpo.skupina7.zrna.UpravljanjeOcenZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("ocene")
@@ -21,9 +17,6 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class OceneVir {
-
-    @Context
-    protected UriInfo uriInfo;
 
     @Inject
     private OceneZrno oceneZrno;
@@ -33,11 +26,9 @@ public class OceneVir {
 
     @GET
     public Response pridobiOcene() {
-        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        Long oceneCount = oceneZrno.pridobiOceneCount(query);
-        List<Ocena> ocene = oceneZrno.pridobiOcene(query);
+        List<Ocena> ocene = oceneZrno.pridobiOcene();
 
-        return Response.status(Response.Status.OK).entity(ocene).header("X-Total-Count", oceneCount).build();
+        return Response.status(Response.Status.OK).entity(ocene).build();
     }
 
     @GET

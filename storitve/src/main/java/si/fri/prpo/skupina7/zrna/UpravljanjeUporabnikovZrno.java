@@ -1,6 +1,5 @@
 package si.fri.prpo.skupina7.zrna;
 
-import si.fri.prpo.skupina7.anotacije.ValidirajUporabnikDto;
 import si.fri.prpo.skupina7.dtos.UporabnikDto;
 import si.fri.prpo.skupina7.entitete.Uporabnik;
 
@@ -34,7 +33,6 @@ public class UpravljanjeUporabnikovZrno {
     @Inject
     private UporabnikiZrno uporabnikiZrno;
 
-    @ValidirajUporabnikDto
     @Transactional
     public Uporabnik dodajUporabnika(UporabnikDto uporabnikDto) {
         String uporabniskoIme = uporabnikDto.getUporabniskoIme();
@@ -53,7 +51,7 @@ public class UpravljanjeUporabnikovZrno {
         }
 
         Character spol = uporabnikDto.getSpol();
-        if(spol != 'M' && spol != 'F' && spol != '-') {
+        if(spol != 'm' && spol != 'ž' && spol != '-') {
             log.info("Neveljaven spol.");
             return null;
         }
@@ -93,7 +91,7 @@ public class UpravljanjeUporabnikovZrno {
         }
 
         Character spol = uporabnikDto.getSpol();
-        if(spol != 'M' && spol != 'F' && spol != '-') {
+        if(spol != 'm' && spol != 'ž' && spol != '-') {
             log.info("Neveljaven spol.");
             return null;
         }

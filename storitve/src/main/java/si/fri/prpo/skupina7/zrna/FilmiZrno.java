@@ -1,10 +1,7 @@
 package si.fri.prpo.skupina7.zrna;
 
-import com.kumuluz.ee.rest.beans.QueryParameters;
-import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina7.anotacije.BeleziKlice;
 import si.fri.prpo.skupina7.entitete.Film;
-import si.fri.prpo.skupina7.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -41,14 +38,6 @@ public class FilmiZrno {
         TypedQuery<Film> query = em.createNamedQuery("Film.getAll", Film.class);
         List<Film> results = query.getResultList();
         return results;
-    }
-
-    public List<Film> pridobiFilme(QueryParameters query) {
-        return JPAUtils.queryEntities(em, Film.class, query);
-    }
-
-    public Long pridobiFilmeCount(QueryParameters query) {
-        return JPAUtils.queryEntitiesCount(em, Film.class, query);
     }
 
     @BeleziKlice

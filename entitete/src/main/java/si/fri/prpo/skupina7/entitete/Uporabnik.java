@@ -1,6 +1,5 @@
 package si.fri.prpo.skupina7.entitete;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class Uporabnik {
 
     private Character spol;
 
-    @JsonbTransient
     @OneToMany(mappedBy = "uporabnik", cascade = CascadeType.ALL)
     private List<Ocena> ocene;
 

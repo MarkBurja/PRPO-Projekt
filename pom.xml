@@ -21,7 +21,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kumuluzee.version>4.1.0</kumuluzee.version>
-        <kumuluzee-rest.version>2.0.1</kumuluzee-rest.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
 
@@ -61,9 +60,13 @@
             </dependency>
 
             <dependency>
-                <groupId>com.kumuluz.ee.rest</groupId>
-                <artifactId>kumuluzee-rest-core</artifactId>
-                <version>${kumuluzee-rest.version}</version>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-json-p-jsonp</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-json-b-yasson</artifactId>
             </dependency>
 
         </dependencies>

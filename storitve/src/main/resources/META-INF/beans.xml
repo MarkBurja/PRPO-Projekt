@@ -4,6 +4,5 @@
        bean-discovery-mode="annotated">
     <interceptors>
         <class>si.fri.prpo.skupina7.interceptorji.BelezenjeKlicevInterceptor</class>
-        <class>si.fri.prpo.skupina7.interceptorji.ValidirajUporabnikDtoInterceptor</class>
     </interceptors>
 </beans>
