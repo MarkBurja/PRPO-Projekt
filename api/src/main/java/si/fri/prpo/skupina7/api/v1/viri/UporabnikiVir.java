@@ -1,6 +1,14 @@
 package si.fri.prpo.skupina7.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina7.dtos.UporabnikDto;
 import si.fri.prpo.skupina7.entitete.Uporabnik;
 import si.fri.prpo.skupina7.zrna.UporabnikiZrno;
@@ -30,6 +38,14 @@ public class UporabnikiVir {
     @Inject
     private UpravljanjeUporabnikovZrno upravljanjeUporabnikovZrno;
 
+    @Operation(description = "Vrne seznam vseh uporabnikov.", summary = "Vrni seznam uporabnikov")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "Seznam uporabnikov uspešno pridobljen",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY)),
+                    headers =  {@Header(name = "X-Total-Count", description = "Število vrnjenih uporabnikov")}
+            )
+    })
     @GET
     public Response pridobiUporabnike() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -39,6 +55,13 @@ public class UporabnikiVir {
         return Response.status(Response.Status.OK).entity(uporabniki).header("X-Total-Count", uporabnikiCount).build();
     }
 
+    @Operation(description = "Vrne specifičnega uporabnika.", summary = "Vrni uporabnika")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Uporabnik uspešno pridobljen",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))
+            ),
+            @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja.")
+    })
     @GET
     @Path("{id}")
     public Response pridobiUporabnika(@PathParam("id") int id) {
@@ -51,8 +74,18 @@ public class UporabnikiVir {
         return Response.status(Response.Status.OK).entity(uporabnik).build();
     }
 
+    @Operation(description = "Doda novega uporabnika.", summary = "Dodaj uporabnika")
+    @APIResponses({
+            @APIResponse(responseCode = "201", description = "Uporabnik uspešno dodan.",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(responseCode = "405", description = "Validacijska napaka."),
+            @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
+    })
     @POST
-    public Response dodajUporabnika(UporabnikDto uporabnikDto) {
+    public Response dodajUporabnika(@RequestBody(
+            description = "DTO objekt za uporabnika", required = true,
+            content = @Content(schema = @Schema(implementation = UporabnikDto.class))) UporabnikDto uporabnikDto) {
+
         Uporabnik uporabnik = upravljanjeUporabnikovZrno.dodajUporabnika(uporabnikDto);
 
         if(uporabnik == null) {
@@ -62,9 +95,19 @@ public class UporabnikiVir {
         return Response.status(Response.Status.CREATED).entity(uporabnik).build();
     }
 
+    @Operation(description = "Posodobi obstoječega uporabnika.", summary = "Posodobi uporabnika")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Uporabnik uspešno posodobljen.",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja."),
+            @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
+    })
     @PUT
     @Path("{id}")
-    public Response posodobiUporabnika(@PathParam("id") int id, UporabnikDto uporabnikDto) {
+    public Response posodobiUporabnika(@PathParam("id") int id, @RequestBody(
+            description = "DTO objekt za uporabnika", required = true,
+            content = @Content(schema = @Schema(implementation = UporabnikDto.class))) UporabnikDto uporabnikDto) {
+
         Uporabnik uporabnik = uporabnikiZrno.pridobiUporabnika(id);
 
         if(uporabnik == null) {
@@ -76,6 +119,11 @@ public class UporabnikiVir {
         return Response.status(Response.Status.OK).entity(noviUporabnik).build();
     }
 
+    @Operation(description = "Izbriše specifičnega uporabnika.", summary = "Izbriši uporabnika")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Uporabnik uspešno izbrisan."),
+            @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja.")
+    })
     @DELETE
     @Path("{id}")
     public Response odstraniUporabnika(@PathParam("id") int id) {
@@ -87,9 +135,19 @@ public class UporabnikiVir {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @Operation(description = "Spremeni geslo specifičnega uporabnika.", summary = "Spremeni geslo uporabnika")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Geslo uspešno spremenjeno.",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja."),
+            @APIResponse(responseCode = "500", description = "Napaka na strežniku.")
+    })
     @PATCH
     @Path("{id}/spremeniGeslo")
-    public Response spremeniGeslo(@PathParam("id") int id, UporabnikDto uporabnikDto) {
+    public Response spremeniGeslo(@PathParam("id") int id, @RequestBody(
+            description = "DTO objekt za uporabnika", required = true,
+            content = @Content(schema = @Schema(implementation = UporabnikDto.class))) UporabnikDto uporabnikDto) {
+
         Uporabnik uporabnik = uporabnikiZrno.pridobiUporabnika(id);
 
         if(uporabnik == null) {

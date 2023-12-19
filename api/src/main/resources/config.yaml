@@ -8,3 +8,11 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/priporocila
       username: postgres
       password: postgres
+  dev:
+    scan-libraries:
+      - entitete
+      - storitve
+integration-properties:
+  translate-plus-api:
+    host: translate-plus.p.rapidapi.com
+    api-key: f21e48fea3msh6904a6d85b24218p14e377jsn8efe83074f6a
