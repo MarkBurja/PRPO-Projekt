@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: priporocila-filmi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: priporocila-filmi
+  template:
+    metadata:
+      labels:
+        app: priporocila-filmi
+    spec:
+      containers:
+        - image: markburja777/priporocila-filmi:latest
+          name: priporocila-filmi
+          env:
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://castor.db.elephantsql.com:5432/lkorpdvz #url za povezavo na bazo
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
+              value: 	lkorpdvz #uporabnisko ime
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
+              value: IWoDtbiALHSB6_MZ0UpilCr8FvJZGKKf #geslo 
+          ports:
+            - containerPort: 8080
+              name: server
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: priporocila-filmi
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: priporocila-filmi
