@@ -1,1 +1,0 @@
-{"ast":null,"code":"var Uporabnik = /** @class */function () {\n  function Uporabnik() {}\n  return Uporabnik;\n}();\nexport { Uporabnik };","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"var Ocena = /** @class */function () {\n  function Ocena() {}\n  return Ocena;\n}();\nexport { Ocena };","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
