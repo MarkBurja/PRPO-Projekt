@@ -5,6 +5,7 @@ kumuluzee:
     name: dev
   datasources:
     - jndi-name: jdbc/PriporocilaDS
+      #connection-url: jdbc:postgresql://castor.db.elephantsql.com:5432/lkorpdvz
       connection-url: jdbc:postgresql://localhost:5432/priporocila
       username: postgres
       password: postgres

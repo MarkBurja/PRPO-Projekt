@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina7.odjemalci;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import si.fri.prpo.skupina7.zrna.FilmiZrno;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ public class TranslatePlusApiOdjemalec {
 
     private Client httpClient;
     private String baseUrl;
+    private String key;
 
     @PostConstruct
     private void init() {
@@ -31,7 +34,8 @@ public class TranslatePlusApiOdjemalec {
         log.info("Inicializacija zrna " + TranslatePlusApiOdjemalec.class.getSimpleName() + " (" + id + ")");
 
         httpClient = ClientBuilder.newClient();
-        baseUrl = "text-translator2.p.rapidapi.com";
+        baseUrl = ConfigurationUtil.getInstance().get("integration-properties.translate-plus-api.host").get();
+        key = ConfigurationUtil.getInstance().get("integration-properties.translate-plus-api.api-key").get();
     }
 
     @PreDestroy
@@ -54,8 +58,8 @@ public class TranslatePlusApiOdjemalec {
                     .target("https://" + baseUrl + "/translate")
                     .request(MediaType.APPLICATION_JSON)
                     .header("content-type", "application/json")
-                    .header("X-RapidAPI-Key", "f21e48fea3msh6904a6d85b24218p14e377jsn8efe83074f6a")
-                    .header("X-RapidAPI-Host", "translate-plus.p.rapidapi.com")
+                    .header("X-RapidAPI-Key", key)
+                    .header("X-RapidAPI-Host", baseUrl)
                     .post(Entity.json(body))
                     .readEntity(JsonObject.class);
         } catch (WebApplicationException | ProcessingException e) {
