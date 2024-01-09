@@ -1,0 +1,38 @@
+<h2>Dodaj oceno</h2>
+
+<div *ngIf="ocena">
+    <form (ngSubmit)="submitForm()" ngNativeValidate>
+        <div *ngIf="prijavljenUporabnik">
+            <table>
+                <tr>
+                    <td><label for="uporabniskoIme">Uporabniško ime</label></td>
+                    <td><input [(ngModel)]="prijavljenUporabnik.uporabniskoIme" id="uporabniskoIme" name="uporabniskoIme" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="geslo">Geslo</label></td>
+                    <td><input [(ngModel)]="prijavljenUporabnik.geslo" id="geslo" name="geslo" type="password" required /></td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr>
+                <td><label for="filmId">Film</label></td>
+                <td><select [(ngModel)]="ocena.filmId" id="filmId" name="filmId" required>
+                    <option *ngFor="let film of filmi" value="{{film.id}}">{{film.naslov}} ({{film.leto}})</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><label for="ocena">Ocena</label></td>
+                <td><input [(ngModel)]="ocena.ocena" id="ocena" name="ocena" type ="number" min="1" max="10" required/></td>
+            </tr>
+            <tr>
+                <td><label for="komentar">Komentar</label></td>
+                <td><input [(ngModel)]="ocena.komentar" id="komentar" name="komentar" required /></td>
+            </tr>
+        </table>
+
+        <br/>
+        <button type="button" (click)="nazaj()">Nazaj</button>
+        <button type="submit">Dodaj</button>
+    </form>
+</div>

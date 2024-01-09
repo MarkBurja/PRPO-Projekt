@@ -1,0 +1,11 @@
+<div *ngIf="ocena">
+
+    <p><b>Uporabnik:</b> {{ocena.uporabnik.uporabniskoIme}} </p>
+    <p><b>Film:</b> {{ocena.film.naslov}} </p>
+    <p><b>Ocena:</b> {{ocena.ocena}} </p>
+    <p>{{ocena.komentar}}</p>
+    <p><b>Čas oddaje:</b> {{ocena.casOddaje | date: 'dd. MM. yyyy hh:mm'}} </p>
+
+    <br>
+    <button (click)="nazaj()">Nazaj</button>
+</div>
