@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prijava-uporabnika-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prijava-uporabnika
+  template:
+    metadata:
+      labels:
+        app: prijava-uporabnika
+    spec:
+      containers:
+        - image: markburja777/prijava-uporabnika:latest
+          name: prijava-uporabnika
+          ports:
+            - containerPort: 8081
+              name: server
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: prijava-uporabnika
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8081
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: prijava-uporabnika

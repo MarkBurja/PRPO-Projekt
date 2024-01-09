@@ -1,0 +1,11 @@
+kumuluzee:
+  name: prijava-uporabnika
+  version: 1.0.0
+  env:
+    name: dev
+  server:
+    http:
+      port: 8081
+integration-properties:
+  priporocila-filmi-api:
+    host: http://localhost:8080/v1
